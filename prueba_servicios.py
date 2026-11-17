@@ -1,47 +1,29 @@
+from registro import RegistroSistema, RUTA_ARCHIVO
+import os
 
-from servicios import (
-    ReservaSala,
-    AlquilerEquipo,
-    AsesoriaEspecializada
+print("===== PRUEBA DEL REGISTRO DE EVENTOS =====")
+
+print("Ubicacion del archivo:", RUTA_ARCHIVO)
+
+RegistroSistema.registrar_evento(
+    "El sistema Software FJ ha iniciado correctamente."
 )
 
-from excepciones import ErrorSistema
-
-
-print("===== SISTEMA SOFTWARE FJ =====")
+RegistroSistema.registrar_evento(
+    "Se ha creado un nuevo cliente."
+)
 
 try:
-    # Crear una sala
-    sala = ReservaSala(1, "Sala de reuniones", 50000, 20)
+    resultado = 10 / 0
 
-    # Crear un equipo
-    equipo = AlquilerEquipo(2, "Computador portatil", 15000, 10)
+except ZeroDivisionError as error:
+    print("Se ha detectado un error y sera registrado.")
 
-    # Crear una asesoria
-    asesoria = AsesoriaEspecializada(
-        3, "Asesoria informatica", 80000, "Programacion"
+    RegistroSistema.registrar_error(
+        "Error al realizar una division.",
+        error
     )
 
-    # Guardar los servicios en una lista
-    servicios = [sala, equipo, asesoria]
+print("\n¿Existe sistema.log?:", os.path.exists(RUTA_ARCHIVO))
 
-    # Mostrar la informacion de cada servicio
-    for servicio in servicios:
-        print("\n", servicio.describir())
-
-    # Calcular costos
-    print("\n===== CALCULO DE COSTOS =====")
-
-    print("Reserva de sala:",
-          sala.calcular_costo(2))
-
-    print("Alquiler de equipos:",
-          equipo.calcular_costo(3, 2, 10))
-
-    print("Asesoria especializada:",
-          asesoria.calcular_costo(2, 1, 5, 19))
-
-except ErrorSistema as error:
-    print("Error controlado:", error)
-
-print("\nPrograma finalizado.")
+print("\n===== FIN DE LA PRUEBA =====")
